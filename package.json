@@ -1,0 +1,36 @@
+{
+  "name": "new-2019",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:clean": "rm -rf dist",
+    "build:server": "tsc",
+    "build:app": "webpack --jsx",
+    "build": "npm run build:clean && npm run build:server && npm run build:app",
+    "start:dev": "npm run build:clean && concurrently \"nodemon\" \"webpack --jsx --watch\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alexFaunt",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^10.12.18",
+    "awesome-typescript-loader": "^5.2.1",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.9",
+    "source-map-loader": "^0.2.4",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2",
+    "webpack": "^4.28.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  }
+}
