@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:clean": "rm -rf dist",
-    "build:server": "tsc",
-    "build:app": "webpack --jsx",
-    "build": "npm run build:clean && npm run build:server && npm run build:app",
-    "start:dev": "npm run build:clean && concurrently \"nodemon\" \"webpack --jsx --watch\"",
+    "start": "node ./dist/compiled/src",
+    "build:server:clean": "rm -rf dist/compiled",
+    "build:server": "npm run build:server:clean && tsc",
+    "build:app:clean": "rm -rf dist/static",
+    "build:app": "npm run build:app:clean && webpack --jsx",
+    "build": "npm run build:server && npm run build:app",
+    "start:dev": "npm run build:app:clean && npm run build:server:clean && concurrently \"nodemon\" \"webpack --jsx --watch\"",
+    "migrate": "ts-node src/store/migrate",
+    "populate": "echo \"populate\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "alexFaunt",
@@ -26,11 +30,14 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
+    "knex": "^0.16.3",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
+    "pg": "^7.7.1",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "semver-compare": "^1.0.0"
   }
 }

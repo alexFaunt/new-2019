@@ -1,25 +1,28 @@
-import server from './server';
-// TODO absolute imports - Vscode understands but nodemon ts-node does not
+import * as Koa from 'koa';
+import * as koaBody from 'koa-bodyparser';
+import * as Router from 'koa-router';
+import * as serve from 'koa-static';
 
-const uncaughtError = (error) => {
-  console.error('[FATAL]', error);
-  process.exit(-1);
+import app from './app';
+
+export default async (config) => {
+  const server = new Koa();
+  const router = new Router();
+
+  // Global middleware
+
+  // Server dist files
+  server.use(serve('dist/static'));
+  server.use(koaBody());
+
+  // routes
+  router.get('/health', (ctx) => { ctx.body = 'OK'; });
+  router.get('*', app());
+
+  server.use(router.routes());
+  server.use(router.allowedMethods());
+
+  server.listen(config.PORT, () => {
+    console.log(`Koa server running on ${config.PORT}`); // TODO logger
+  });
 };
-
-process.on('uncaughtException', uncaughtError);
-process.on('unhandledRejection', uncaughtError);
-
-// TODO convict
-const config = {
-  PORT: 8000,
-};
-
-async function run() {
-  try {
-    await server(config);
-  } catch (error) {
-    uncaughtError(error);
-  }
-}
-
-run();

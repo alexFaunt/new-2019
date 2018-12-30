@@ -1,0 +1,37 @@
+version: '3'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/dist
+    ports:
+      - "8080:8080"
+      - "9229:9229"
+    environment:
+      - ALLOW_AUTOMATIC_MIGRATIONS=false
+      - ALLOW_UNSAFE_DEPLOYMENTS=true
+      - NODE_ENV=development
+      - PORT=8080
+      - POSTGRES_CONNECTION_TIMEOUT=5000
+      - POSTGRES_DB=store
+      - POSTGRES_HOST=postgres-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_ADMIN_PASSWORD=admin
+      - POSTGRES_ADMIN_USER=admin
+      - POSTGRES_APP_PASSWORD=app-password
+      - POSTGRES_APP_USER=app-user
+    depends_on:
+      - postgres-db
+    command: npm run start:dev
+  postgres-db:
+    image: postgres:11.1-alpine
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_DB=store
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin

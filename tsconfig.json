@@ -3,11 +3,12 @@
     "target": "es6",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "./dist/server",
+    "outDir": "./dist/compiled",
     "jsx": "react",
     "moduleResolution": "node",
-    "baseUrl": "./src",
+    // "baseUrl": "./src",
     "types" : ["node"],
+    "resolveJsonModule": true,
   },
   "include": [
     "src/**/*"
@@ -15,6 +16,7 @@
   "exclude": [
     "node_modules",
     "dist",
+    "package.json",
   ],
   "compileOnSave": true
 }

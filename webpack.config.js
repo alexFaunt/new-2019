@@ -6,7 +6,7 @@ module.exports = {
   output: {
     publicPath: "/",
     filename: 'js/bundle.js',
-    path: path.resolve(__dirname, 'dist/app'),
+    path: path.resolve(__dirname, 'dist/static'),
   },
 
   // Enable sourcemaps for debugging webpack's output.
