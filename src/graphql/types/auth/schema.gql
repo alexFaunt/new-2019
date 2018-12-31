@@ -1,0 +1,7 @@
+extend type Query {
+  auth: Auth!
+}
+
+type Auth {
+  user: User
+}

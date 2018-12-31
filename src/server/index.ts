@@ -4,6 +4,7 @@ import * as Router from 'koa-router';
 import * as serve from 'koa-static';
 
 import app from './app';
+import graphql from './graphql';
 
 export default async (config) => {
   const server = new Koa();
@@ -21,6 +22,8 @@ export default async (config) => {
 
   server.use(router.routes());
   server.use(router.allowedMethods());
+
+  await graphql(server);
 
   server.listen(config.PORT, () => {
     console.log(`Koa server running on ${config.PORT}`); // TODO logger

@@ -9,6 +9,14 @@
     // "baseUrl": "./src",
     "types" : ["node"],
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es5",
+      "es6",
+      "dom",
+      "es2015",
+      "esnext"
+    ],
   },
   "include": [
     "src/**/*"
@@ -16,7 +24,6 @@
   "exclude": [
     "node_modules",
     "dist",
-    "package.json",
   ],
   "compileOnSave": true
 }
