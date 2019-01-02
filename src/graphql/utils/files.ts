@@ -3,6 +3,8 @@ import * as path from 'path';
 import { promisify } from 'util';
 import { camelCase } from 'lodash/fp';
 
+import { FieldResolver } from '../types';
+
 const readFile = promisify(fs.readFile);
 const readDir = promisify(fs.readdir);
 
@@ -39,7 +41,7 @@ const fileLoader = (loader) => async (filename) => {
   ), {});
 };
 
-type FileRequirer = (filename: string) => Promise<{[s: string]: Function}>;
+type FileRequirer = (filename: string) => Promise<{[s: string]: FieldResolver<any, any>}>;
 export const requireTypesFile: FileRequirer = fileLoader(requirer);
 
 type FileReader = (filename: string) => Promise<{[s: string]: string}>;

@@ -3,8 +3,8 @@ import * as koaBody from 'koa-bodyparser';
 import * as Router from 'koa-router';
 import * as serve from 'koa-static';
 
-import app from './app';
-import graphql from './graphql';
+import app from './middleware/app';
+import graphql from './middleware/graphql';
 
 export default async (config) => {
   const server = new Koa();
@@ -26,6 +26,7 @@ export default async (config) => {
   await graphql(server);
 
   server.listen(config.PORT, () => {
+    // tslint:disable-next-line:no-console
     console.log(`Koa server running on ${config.PORT}`); // TODO logger
   });
 };
