@@ -28,7 +28,6 @@ interface IArguments {
 export default ({ connection, pool, acquireConnectionTimeout, debug }: IArguments) => {
   const instance = knex({
     client: 'pg',
-    // $FlowFixMe
     connection,
     pool,
     acquireConnectionTimeout,
@@ -38,7 +37,7 @@ export default ({ connection, pool, acquireConnectionTimeout, debug }: IArgument
     // Knex has a debug option to print every SQL statament ran, but it's not very good
     instance.client.on('query', (statement) => {
       const query = instance.client._formatQuery(statement.sql, statement.bindings, 'UTC');
-      logger.info('[knex]', query);
+      logger.info(query);
     });
   }
 

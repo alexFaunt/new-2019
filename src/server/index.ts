@@ -2,6 +2,7 @@ import * as Koa from 'koa';
 import * as koaBody from 'koa-bodyparser';
 import * as Router from 'koa-router';
 import * as serve from 'koa-static';
+import * as compress from 'koa-compress';
 
 import app from './middleware/app';
 import graphql from './middleware/graphql';
@@ -25,11 +26,11 @@ export default async (config) => {
       password: config.POSTGRES_APP_PASSWORD,
     },
     pool: {
-      min: 2,
-      max: 10,
+      min: config.POSTGRES_POOL_MIN,
+      max: config.POSTGRES_POOL_MAX,
     },
     acquireConnectionTimeout: config.POSTGRES_CONNECTION_TIMEOUT,
-    debug: true,
+    debug: config.DEBUG_SQL_STATEMENTS,
   };
 
   const authPool = createPool(poolOptions);
@@ -42,7 +43,12 @@ export default async (config) => {
   // Server dist files
   server.use(serve('dist/static'));
 
-  // Healthcheck
+  // If compression is enabled compress the responses
+  if (config.HTTP_COMPRESSION_ENABLED) {
+    server.use(compress());
+  }
+
+  // Health check
   router.get('/health', (ctx) => { ctx.body = 'OK'; });
 
   server.use(koaBody());
@@ -60,12 +66,12 @@ export default async (config) => {
   server.use(router.routes());
   server.use(router.allowedMethods());
 
-  const allowedMethods = config.ALLOW_BASIC_AUTH ? ['basic', 'bearer'] : ['bearer'];
+  const allowedMethods = config.DANGEROUSLY_ALLOW_BASIC_AUTH ? ['basic', 'bearer'] : ['bearer'];
   // Extract auth from headers going to graphql
   server.use(authorization({ allowedMethods }));
 
   // Graphql APIs awful pattern
-  await graphql(server);
+  await graphql({ server, playgroundEnabled: config.PLAYGROUND_ENABLED });
 
   server.listen(config.PORT, () => {
     logger.info(`Koa server running on ${config.PORT}`);

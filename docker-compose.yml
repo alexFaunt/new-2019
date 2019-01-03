@@ -11,9 +11,12 @@ services:
       - "9229:9229"
     environment:
       - ALLOW_AUTOMATIC_MIGRATIONS=false
-      - ALLOW_BASIC_AUTH=true
       - ALLOW_UNSAFE_DEPLOYMENTS=true
+      - DANGEROUSLY_ALLOW_BASIC_AUTH=true
+      - DEBUG_SQL_STATEMENTS=true
+      - ERROR_STACK_ENABLED=true
       - NODE_ENV=development
+      - PLAYGROUND_ENABLED=true
       - PORT=8080
       - POSTGRES_CONNECTION_TIMEOUT=5000
       - POSTGRES_DB=store
