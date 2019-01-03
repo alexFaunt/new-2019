@@ -5,12 +5,13 @@ export const { up, down } = migrator(__filename, {
   requires: '1.0.0',
   migration: async (knex) => {
     await knex.schema.createTable('users', (table) => {
-      table.string('email', 128).notNullable()
-        .comment('The email of the user');
+      table.string('email').notNullable();
+      table.string('display_name');
+      table.timestamps(true, true);
 
       table.unique('email');
     });
 
-    await createId({ knex, table: 'users', prefix: 'usr' })
+    await createId({ knex, table: 'users', prefix: 'usr' });
   },
 });

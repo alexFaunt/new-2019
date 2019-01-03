@@ -9,7 +9,16 @@ COPY --chown=node:node package.json package-lock.json /usr/src/app/
 
 WORKDIR /usr/src/app
 
-RUN npm ci
+# Packages with pre-built native modules that are ABI incompatible (like bcrypt)
+# need to perform a source build to target the right libc. This is done through
+# node-pre-gyp, which relies on having python and the GCC toolchain available.
+# More info at:
+# - https://github.com/kelektiv/node.bcrypt.js/commit/9a9ab453ed5cd9699e4371eba88f7d9f99e01a2a
+# - https://github.com/kelektiv/node.bcrypt.js/issues/528
+# - https://github.com/nodejs/docker-node/issues/384
+RUN apk --no-cache add --virtual native-deps make python gcc g++ && \
+  npm ci  && \
+  apk del native-deps
 
 COPY --chown=node:node . .
 

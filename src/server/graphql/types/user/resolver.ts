@@ -2,17 +2,18 @@ import { FieldResolver, IDefaultArgs } from '../../types';
 import { IModelUser } from './model';
 
 export interface IUserType {
-  email: IModelUser['email'];
+  email: string;
+  displayName: string;
 }
 
 export type UserFieldResolver<TSource, TArgs = IDefaultArgs> = FieldResolver<TSource, IModelUser, TArgs>;
 
 interface IResolver {
-  email: FieldResolver<IModelUser, IUserType['email']>;
+  displayName: FieldResolver<IModelUser, IUserType['displayName']>;
 }
 
 const resolver: IResolver  = {
-  email: () => 'alex@email.com',
+  displayName: ({ displayName }) => displayName || 'Mysterious Moose',
 };
 
 export default resolver;

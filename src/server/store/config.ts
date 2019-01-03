@@ -17,4 +17,4 @@ export default {
     directory: __dirname,
   },
   debug: false,
-}
+};

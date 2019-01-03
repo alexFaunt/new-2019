@@ -4,14 +4,18 @@ import * as knex from 'knex';
 
 import knexConfig from './config';
 
+import createLogger from '../common/logger';
+
+const logger = createLogger('store');
+
 function report(appliedMigrations) {
   if (appliedMigrations !== Number.MIN_SAFE_INTEGER) {
     const versions = Math.abs(appliedMigrations);
     const position = appliedMigrations > 0 ? 'ahead' : 'behind';
 
-    console.info(`[migrator] DB is ${versions} versions ${position}`);
+    logger.info(`[migrator] DB is ${versions} versions ${position}`);
   } else {
-    console.info(`[migrator] DB is not initialised`);
+    logger.info(`[migrator] DB is not initialised`);
   }
 }
 
@@ -89,9 +93,9 @@ export default async function migrator(configuration) {
   // "tableName_lock"; it has single one column called is_locked that you need
   // to set to 0 in order to release the lock.
   if (configuration.ALLOW_AUTOMATIC_MIGRATIONS) {
-    console.info('[migrator] Running migrations');
+    logger.info('[migrator] Running migrations');
     await knexInstance.migrate.latest();
   } else {
-    console.info('[migrator] Migrations WILL NOT run automatically');
+    logger.info('[migrator] Migrations WILL NOT run automatically');
   }
 }

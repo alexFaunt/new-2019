@@ -2,9 +2,13 @@
 /* eslint-disable no-console */
 
 import * as path from 'path';
-import *  as semver from 'semver-compare';
+import * as semver from 'semver-compare';
 
-import { version } from '../../../package.json';
+import { version } from '../../../../package.json';
+
+import createLogger from '../../common/logger';
+
+const logger = createLogger('store/seed');
 
 export default (pathname, definition) => {
   if (!pathname) {
@@ -36,7 +40,7 @@ export default (pathname, definition) => {
       }
 
       const notification = `Running migration "${name}" on ${environment}`;
-      console.info(`[migrator] ${notification}`);
+      logger.info(`[migrator] ${notification}`);
 
       const knexer = (table) => knex(table).withSchema('app');
       const proxy = new Proxy(knexer, {

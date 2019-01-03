@@ -12,7 +12,7 @@ const generateSecretSauce = () => {
   const ia = Math.round(1000 + Math.random() * 8999); // Pick a random 4 digit number for ia
 
   // Look for a decent prime value for ic within 20 of the value (1/2 - root(3)/6)*im
-  const exact = ((0.5 - (Math.sqrt(3)/6)) * im);
+  const exact = ((0.5 - (Math.sqrt(3) / 6)) * im);
   const rounded = Math.round(exact);
   const maxRange = 20;
   let diff = 0;
@@ -38,8 +38,7 @@ const generateSecretSauce = () => {
     im,
     ia,
   };
-}
-
+};
 
 export default async ({ knex, table, prefix }) => {
   const { ia, ic, im } = generateSecretSauce();
@@ -77,8 +76,8 @@ export default async ({ knex, table, prefix }) => {
   await knex.raw(`
     ALTER TABLE app.${table} ADD COLUMN id VARCHAR PRIMARY KEY;
 
-    CREATE SEQUENCE app.${table}_seed INCREMENT BY 1 START WITH 1 OWNED BY app.${table}.id;
+    CREATE SEQUENCE app.${table}_id_seed INCREMENT BY 1 START WITH 1 OWNED BY app.${table}.id;
 
-    ALTER TABLE app.${table} ALTER COLUMN id SET DEFAULT create_${table}_id(nextval('app.${table}_seed'));
+    ALTER TABLE app.${table} ALTER COLUMN id SET DEFAULT create_${table}_id(nextval('app.${table}_id_seed'));
   `);
 };

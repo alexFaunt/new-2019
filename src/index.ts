@@ -1,8 +1,11 @@
 import server from './server';
-import migrate from './store';
+import migrate from './server/store';
+import createLogger from './server/common/logger';
+
+const logger = createLogger('src');
 
 const uncaughtError = (error) => {
-  console.error('[FATAL]', error);
+  logger.error('[FATAL]', error);
   process.exit(-1);
 };
 
@@ -10,7 +13,10 @@ process.on('uncaughtException', uncaughtError);
 process.on('unhandledRejection', uncaughtError);
 
 // TODO convict
-const config = process.env;
+const config = {
+  ...process.env,
+  ALLOW_AUTOMATIC_MIGRATIONS: false,
+};
 
 async function run() {
   try {
