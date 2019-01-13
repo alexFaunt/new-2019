@@ -71,7 +71,11 @@ export default async (config) => {
   server.use(authorization({ allowedMethods }));
 
   // Graphql APIs awful pattern
-  await graphql({ server, playgroundEnabled: config.PLAYGROUND_ENABLED });
+  await graphql({
+    server,
+    pool: graphqlPool,
+    playgroundEnabled: config.PLAYGROUND_ENABLED,
+  });
 
   server.listen(config.PORT, () => {
     logger.info(`Koa server running on ${config.PORT}`);

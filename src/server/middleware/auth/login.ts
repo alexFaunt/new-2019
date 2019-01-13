@@ -25,7 +25,7 @@ export default ({ UserModel }) => () => async (ctx) => {
 
     ctx.body = {
       success: true,
-      token,
+      authorization: `Bearer ${token}`,
     };
     return;
   }
@@ -34,6 +34,6 @@ export default ({ UserModel }) => () => async (ctx) => {
   ctx.body = {
     message: 'failed',
     success: false,
-    token: null,
+    authorization: null,
   };
 };

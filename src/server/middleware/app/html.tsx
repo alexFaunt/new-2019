@@ -1,16 +1,16 @@
 import * as React from 'react';
 
-const Html = ({ content, state, environment = 'production' }) => {
+const Html = ({ content, state, styles, environment = 'production' }) => {
   const reactSuffix = `${environment}${environment === 'production' ? '.min' : ''}`;
 
   return (
     <html>
       <head>
         <title>TODO helmet</title>
+        { styles }
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
-
         <script dangerouslySetInnerHTML={{
           __html: `window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
         }} />

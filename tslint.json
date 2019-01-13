@@ -7,7 +7,8 @@
   "rules": {
     "object-literal-sort-keys": false,
     "quotemark": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "interface-name" : false,
   },
   "rulesDirectory": [],
   "linterOptions": {

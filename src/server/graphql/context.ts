@@ -11,10 +11,12 @@ export interface IContextAuth {
 
 export interface IContextArgs {
   auth: IContextAuth;
+  loaders: any; // TODO
 }
 
 export interface IContext {
   auth: IContextAuth;
+  loaders: any; // TODO
 }
 
-export default ({ auth }: IContextArgs): IContext => ({ auth });
+export default ({ auth, loaders }: IContextArgs): IContext => ({ auth, loaders });

@@ -102,6 +102,8 @@ const config = {
   },
 };
 
+// TODO block from being used on browser
+
 let properties = null;
 export default () => {
   if (!properties) {
