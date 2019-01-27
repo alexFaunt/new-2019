@@ -1,23 +1,16 @@
 import * as React from 'react';
 
-export default (stateCreator) => {
-  const context = React.createContext(stateCreator);
+export default (service) => {
+  const context = React.createContext(service);
 
-  // TODO change this pattern to wrap only the methods and pass in state
-  class Provider extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = stateCreator;
-    }
-
-    render() {
-      return (
-        <context.Provider value={this.state}>
-          { this.props.children }
-        </context.Provider>
-      );
-    }
-  }
+  const Provider = ({ children }) => {
+    const [state] = React.useState(service);
+    return (
+      <context.Provider value={state}>
+        { children }
+      </context.Provider>
+    );
+  };
 
   return {
     Provider,

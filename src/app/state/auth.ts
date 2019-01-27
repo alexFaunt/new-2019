@@ -1,6 +1,11 @@
 import { useContext } from 'react';
 import createState from '../utils/create-state';
 
+interface State {
+  loggedIn: boolean,
+  authorization: null | string,
+};
+
 const AUTH_KEY = 'authorization';
 
 const emptyState = {
@@ -8,7 +13,7 @@ const emptyState = {
   authorization: null,
 };
 
-const persist = ({ authorization }) => {
+const persist = ({ authorization }: State) => {
   if (typeof window !== 'undefined') {
     window.localStorage.setItem(AUTH_KEY, authorization);
   }
@@ -51,7 +56,7 @@ const actions = {
   },
 };
 
-const { context, Provider } = createState(initialState, actions);
+const { context, Provider } = createState<State>(initialState, actions);
 
 export { Provider };
 export default () => useContext(context);

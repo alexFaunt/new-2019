@@ -96,7 +96,8 @@ const LoginForm = ({ onSubmit, className }) => (
 
 const LoginFormWrapper = ({ history, location, className }) => {
   const { login } = useAuthService();
-  const { setAuth } = useAuthState();
+  const { actions: { setAuth } } = useAuthState();
+
   const onSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const { authorization } = await login(values);

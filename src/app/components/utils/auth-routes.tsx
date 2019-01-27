@@ -12,7 +12,7 @@ const createParams = ({ pathname, search }) => {
 const isBrowser = typeof window !== 'undefined';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const { loggedIn } = useAuthState();
+  const { state: { loggedIn } } = useAuthState();
   return (
     <Route
       {...rest}
@@ -28,7 +28,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 };
 
 const LoginRoute = ({ component: Component, ...rest }) => {
-  const { loggedIn } = useAuthState();
+  const { state: { loggedIn } } = useAuthState();
   return (
     <Route
       {...rest}

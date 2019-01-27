@@ -21,7 +21,7 @@ const Logout = styled.button`
 `;
 
 const Header = () => {
-  const { clear } = useAuthState();
+  const { actions: { clear } } = useAuthState();
   return (
     <Wrapper>
       <Title>Title</Title>
