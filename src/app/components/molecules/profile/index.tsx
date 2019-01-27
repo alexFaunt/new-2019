@@ -16,7 +16,6 @@ const profileQuery = gql`
 const Profile = () => (
   <Query query={profileQuery} ssr={false}>
     {({ loading, error, data }) => {
-      console.log('loading', loading, error, data);
       if (loading) {
         return <p>Loading...</p>;
       }
