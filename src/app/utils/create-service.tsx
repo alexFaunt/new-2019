@@ -7,14 +7,7 @@ export default (stateCreator) => {
   class Provider extends React.Component {
     constructor(props) {
       super(props);
-
-      // If the state requires an update function it will have a callback
-      // Provide it a setState bound to this component.
-      if (typeof stateCreator === 'function') {
-        this.state = stateCreator(this.setState.bind(this));
-      } else {
-        this.state = stateCreator;
-      }
+      this.state = stateCreator;
     }
 
     render() {

@@ -9,6 +9,8 @@ const createParams = ({ pathname, search }) => {
   return stringify({ returnTo });
 };
 
+const isBrowser = typeof window !== 'undefined';
+
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <AuthState>
     {({ loggedIn }) => (
@@ -16,7 +18,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
         {...rest}
         render={
           (props) => (
-            loggedIn
+            loggedIn || !isBrowser
               ? <Component {...props} />
               : <Redirect to={{ pathname: '/login', search: createParams(props.location) }} />
           )

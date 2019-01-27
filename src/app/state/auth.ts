@@ -1,4 +1,4 @@
-import createContext from '../utils/create-context';
+import createState from '../utils/create-state';
 
 const AUTH_KEY = 'authorization';
 
@@ -31,16 +31,12 @@ export const getPersistedState = () => {
 
 const initialState = getPersistedState() || emptyState;
 
-const contextCreator = (update) => ({
-  ...initialState,
-
-  setAuth: (authorization) => {
+const actions = {
+  setAuth: (state, authorization) => {
     const newState = {
       loggedIn: true,
       authorization,
     };
-
-    update(newState);
 
     persist(newState);
 
@@ -48,13 +44,13 @@ const contextCreator = (update) => ({
   },
 
   clear: () => {
-    update(emptyState);
-
     purge();
-  },
-});
 
-const { Consumer, Provider } = createContext(contextCreator);
+    return emptyState;
+  },
+};
+
+const { Consumer, Provider } = createState(initialState, actions);
 
 export { Provider };
 export default Consumer;

@@ -13,7 +13,7 @@ import App from '../../../app';
 // TODO some nicer form stuff / component set up / maybe one of the new storybooks
 
 const appMiddleware = () => (ctx, next) => {
-  const client = createClient(null);
+  const client = createClient(null, true);
 
   let routerContext = {} as any; // TODO static context type
   const Wrapper = () => (

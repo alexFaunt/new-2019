@@ -6,7 +6,7 @@ import { setContext } from 'apollo-link-context';
 import { API_URL } from '../config';
 import { getPersistedState } from '../state/auth';
 
-export const createClient = (initialState) => {
+export const createClient = (initialState, ssrMode = false) => {
   // Used to add out auth headers to request context before executing graphql requests
   const getContext = ({ headers = {}, ...context }) => {
     const authState = getPersistedState();
@@ -36,6 +36,7 @@ export const createClient = (initialState) => {
     link: authLink.concat(apiLink),
     connectToDevTools: true,
     cache,
+    ssrMode,
   });
 };
 

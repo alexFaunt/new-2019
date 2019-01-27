@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */ // It doesn't understand value={this.state}
 import { LOGIN_URL } from '../config';
 import fetch from '../utils/fetch';
-import createContext from '../utils/create-context';
+import createService from '../utils/create-service';
 
 const createAuthService = ({ url }) => {
   if (!url) {
@@ -27,7 +27,7 @@ const service = createAuthService({
   url: LOGIN_URL,
 });
 
-const { Provider, Consumer } = createContext(service);
+const { Provider, Consumer } = createService(service);
 
 export { Provider };
 export default Consumer;

@@ -12,7 +12,6 @@ export default async ({ server, pool, playgroundEnabled }) => {
 
   const loaders = createLoaders({ pool });
 
-  // TODO create models/loaders from pool and add them to context
   const playground = playgroundEnabled ? devPlaygroundOptions : false;
 
   const apollo = new ApolloServer({
