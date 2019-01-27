@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import createState from '../utils/create-state';
 
 const AUTH_KEY = 'authorization';
@@ -50,7 +51,7 @@ const actions = {
   },
 };
 
-const { Consumer, Provider } = createState(initialState, actions);
+const { context, Provider } = createState(initialState, actions);
 
 export { Provider };
-export default Consumer;
+export default () => useContext(context);

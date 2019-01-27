@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unused-state */ // It doesn't understand value={this.state}
+import { useContext } from 'react';
 import { LOGIN_URL } from '../config';
 import fetch from '../utils/fetch';
 import createService from '../utils/create-service';
@@ -27,7 +27,7 @@ const service = createAuthService({
   url: LOGIN_URL,
 });
 
-const { Provider, Consumer } = createService(service);
+const { Provider, context } = createService(service);
 
 export { Provider };
-export default Consumer;
+export default () => useContext(context);

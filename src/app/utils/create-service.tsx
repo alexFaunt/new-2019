@@ -19,10 +19,8 @@ export default (stateCreator) => {
     }
   }
 
-  const { Consumer } = context;
-
   return {
     Provider,
-    Consumer,
+    context,
   };
 };

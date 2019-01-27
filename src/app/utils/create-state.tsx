@@ -55,10 +55,8 @@ export default (initialState, actionsFunctions) => {
     }
   }
 
-  const { Consumer } = context;
-
   return {
     Provider,
-    Consumer,
+    context,
   };
 };

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import AuthState from '../../../state/auth';
+import useAuthState from '../../../state/auth';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styled.header`
@@ -20,16 +20,15 @@ const Logout = styled.button`
   transform: translateY(-50%);
 `;
 
-const Header = () => (
-  <AuthState>
-    {({ clear }) => (
-      <Wrapper>
-        <Title>Title</Title>
-        <Logout type="button" onClick={clear}>Log out</Logout>
-        <Link to="/profile">Profile</Link>
-      </Wrapper>
-    )}
-  </AuthState>
-);
+const Header = () => {
+  const { clear } = useAuthState();
+  return (
+    <Wrapper>
+      <Title>Title</Title>
+      <Logout type="button" onClick={clear}>Log out</Logout>
+      <Link to="/profile">Profile</Link>
+    </Wrapper>
+  );
+};
 
 export default Header;

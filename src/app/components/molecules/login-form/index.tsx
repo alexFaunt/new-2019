@@ -5,8 +5,8 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { Formik, Form as FormikForm, Field } from 'formik';
 import { parse } from 'querystring';
 
-import AuthState from '../../../state/auth';
-import AuthService from '../../../services/auth';
+import useAuthState from '../../../state/auth';
+import useAuthService from '../../../services/auth';
 
 const defaultReturnTo = '/';
 
@@ -94,27 +94,21 @@ const LoginForm = ({ onSubmit, className }) => (
   </Formik>
 );
 
-const LoginFormWrapper = ({ history, location, className }) => (
-  <AuthService>
-    {({ login }) => (
-      <AuthState>
-        {({ setAuth }) => {
-          const onSubmit = async (values, { setSubmitting, setErrors }) => {
-            try {
-              const { authorization } = await login(values);
-              setAuth(authorization);
-            } catch (error) {
-              setErrors({ submission: getErrorMessage(error) });
-              setSubmitting(false);
-            }
-          };
+const LoginFormWrapper = ({ history, location, className }) => {
+  const { login } = useAuthService();
+  const { setAuth } = useAuthState();
+  const onSubmit = async (values, { setSubmitting, setErrors }) => {
+    try {
+      const { authorization } = await login(values);
+      setAuth(authorization);
+    } catch (error) {
+      setErrors({ submission: getErrorMessage(error) });
+      setSubmitting(false);
+    }
+  };
 
-          return <LoginForm onSubmit={onSubmit} className={className} />;
-        }}
-      </AuthState>
-    )}
-  </AuthService>
-);
+  return <LoginForm onSubmit={onSubmit} className={className} />;
+};
 
 // TODO make this common
 interface WithClass extends RouteComponentProps<any> {
